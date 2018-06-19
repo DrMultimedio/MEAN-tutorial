@@ -7,7 +7,13 @@ employeeCtrl.getEmployees = async (req, res) =>{
      //find busca todos los empleados
 }
 employeeCtrl.createEmployees = async (req, res) =>{
-   const employee =  new Employee (req.body);
+    const employee = new Employee({
+        name: req.body.name,
+        position: req.body.position,
+        office: req.body.office,
+        salary: req.body.salary,
+
+    });
    await employee.save();
    console.log(employee);
     res.json({
@@ -17,7 +23,6 @@ employeeCtrl.createEmployees = async (req, res) =>{
 
 employeeCtrl.getEmployee = async (req, res) =>{
     console.log(req.params);
-
     const employee = await Employee.findById(req.params.id);
     res.json(employee);
 }

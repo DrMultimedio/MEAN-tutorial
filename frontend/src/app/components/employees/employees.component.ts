@@ -26,15 +26,16 @@ export class EmployeesComponent implements OnInit {
         console.log(res);
         this.resetForm();
         this.getEmployees();
-        M.toast({html: "Guardado satisfactoriamente"});
+        this.resetForm(form);
+        M.toast({html: "Actualizado satisfactoriamente"});
       });
     }
     else{
       this.employeeService.postEmployee(form.value)
       .subscribe(res => {
+        console.log(res);
         this.resetForm(form);
         M.toast({html: "Guardado satisfactoriamente"});
-        console.log(res);
         this.getEmployees();
       });
     }
@@ -56,5 +57,14 @@ export class EmployeesComponent implements OnInit {
   editEmployee(employee: Employee){
     this.employeeService.selectedEmployee = employee; //esta linea pone en el formulario el empleado seleccionado
 
+  }
+  deleteEmployee(_id: string){
+    if(confirm('¿Estas seguro de que quieres eliminar el empleado?')){
+      this.employeeService.deleteEmployee(_id)
+        .subscribe(res => {
+          console.log(res);
+          this.getEmployees();
+        });
+    }
   }
 }
